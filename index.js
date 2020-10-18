@@ -1,7 +1,9 @@
 "use strict"
 
-let express  = require('express')
-let app      = express()
+let express         = require('express')
+let app             = express()
+
+app.use(flash())
 
 const PORT = 4000
 

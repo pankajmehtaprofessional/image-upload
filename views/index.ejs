@@ -7,18 +7,25 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>        
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
         <link type="text/css" rel="stylesheet" href="style.css" />
     </head>
     <body>
         <div class="container">
             <div class="row form-group">
                 <form method="POST" action="/"  enctype="multipart/form-data" id="upload-form">                    
-                    <input name="images" type="file" multiple class="form-control-file">
-                    <input type="submit" value="Submit">
+                    <input name="images" id="images" type="file" multiple class="form-control-file" accept="jpg,png,jpeg,gif">
+                    <div>
+                        <label class="note">Valid entensions* : jpg,png,jpeg,gif</label>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Submit">
                 </form>
             </div>
-            <div class="row">
+            <div id="error">
+            </div>            
+            <div class="row content">
                 <% if(data.length ){ 
                     data.map(val => {
                     %>
@@ -45,17 +52,30 @@
         </div>
     </body>
     <script>
-        $(() => {
-            $("#upload-form").on('submit', (e) => {
-                e.preventDefault();
-                let fileUpload = $("input[type='file']");
-                if (parseInt(fileUpload.get(0).files.length) < 4){
-                    alert("Please select atleast 4 files");
-                }
-                else{
-                    $("#upload-form").submit()
-                }
+        $(()=>{
+            $('body').on('click',()=>{
+                $('#error').text('');
             })
+        })
+        $( "#upload-form" ).validate({
+            errorPlacement: function(error, element) {
+                error.appendTo( $('#error') );
+            },
+            rules: {
+                images: {
+                    required: true,
+                    extension: "png|jpg|jpeg|gif",
+                    filesize: 2*1024
+                }
+            }
+        });
+        $('#upload-form').on('submit', function(){
+            let fileUpload = $("input[type='file']");
+            if (parseInt(fileUpload.get(0).files.length) < 4){
+                alert("Please select atleast 4 files");
+                return false;
+            }
+            else return true 
         })
     </script>
 </html>
