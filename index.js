@@ -3,8 +3,6 @@
 let express         = require('express')
 let app             = express()
 
-app.use(flash())
-
 const PORT = 4000
 
 app.use(express.static('public'))
