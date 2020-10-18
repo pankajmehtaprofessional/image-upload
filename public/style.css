@@ -1,0 +1,26 @@
+.container{
+	margin-top:50px;
+}
+
+.col-md-3{
+	/* background:url("https://via.placeholder.com/400") no-repeat center center; */
+	background-size:cover;
+	height:200px;
+	width:200px;
+	border:1px solid white;
+}
+
+.col-md-3 img {
+	height: 100%;
+	width: 100%;
+}
+.error{
+	color: red
+}
+.note{
+	color: grey
+}
+.content{
+	margin-top: 5%;
+	border: 1px solid grey;
+}
